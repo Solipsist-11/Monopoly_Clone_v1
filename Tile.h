@@ -15,8 +15,6 @@ private:
 		Chance,
 		CommunityChest
 	};
-	Type& operator=(int i);
-	Type& operator<<(std::ifstream input);
 public:
 	Tile(std::ifstream& input, int nTile);
 	~Tile();

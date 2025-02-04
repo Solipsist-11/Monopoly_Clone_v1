@@ -1,17 +1,5 @@
 #include "Tile.h"
 
-Tile::Type& Tile::operator=(int i)
-{
-	type = static_cast<Type>(i);
-}
-
-Tile::Type& Tile::operator<<(std::ifstream input)
-{
-	int underlier;
-	input >> underlier;
-	*this = underlier;
-}
-
 Tile::Tile(std::ifstream& input, int nTile)
 	:
 	index(nTile)
@@ -23,6 +11,9 @@ Tile::Tile(std::ifstream& input, int nTile)
 		if (line == search_ind )
 		{
 			input >> name >> price;
+			int type_int;
+			input >> type_int;
+			type = static_cast<Type>(type_int);
 			for (int i = 0; i < rentLevels; i++)
 			{
 				input >> rentcosttable[i];
