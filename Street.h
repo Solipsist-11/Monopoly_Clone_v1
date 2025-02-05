@@ -3,23 +3,25 @@
 #include <fstream>
 #include <assert.h>
 
-class Tile
+class Street
 {
 private:
-	enum class Type
+	enum class Color
 	{
-		Unique,
-		Street,
-		Railroad,
-		Utility,
-		Chance,
-		CommunityChest
+		Brown,
+		Blue,
+		Pink,
+		Orange,
+		Red,
+		Green,
+		Violet
 	};
 public:
-	Tile(std::ifstream& input, int nTile);
-	~Tile();
-	Tile(const Tile& tile);
-	Tile& operator=(const Tile& tile);
+	Street(std::ifstream& input, int nStreet);
+	~Street();
+	Street(const Street& Street);
+	Street& operator=(const Street& Street);
+	void Build();
 	int RentCost();
 	int BuildCost();
 
@@ -29,7 +31,7 @@ public:
 
 private:
 	std::string name;
-	Type type;
+	Color color;
 	int price;
 	bool purchased = false;
 	int built_apartments = 0;
