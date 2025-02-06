@@ -132,14 +132,18 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SaveSystem.cpp" />
+    <ClCompile Include="Station.cpp" />
     <ClCompile Include="Street.cpp" />
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Dice.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SaveSystem.h" />
+    <ClInclude Include="Station.h" />
     <ClInclude Include="Street.h" />
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -16,15 +16,23 @@ private:
 		Green,
 		Violet
 	};
+	enum class Owner
+	{
+		None,
+		Player1,
+		Player2,
+		Player3,
+		Player4
+	};
 public:
 	Street(std::ifstream& input, int nStreet);
 	~Street();
 	Street(const Street& Street);
 	Street& operator=(const Street& Street);
 	void Build();
-	int RentCost();
+	int GetRentCost() const;
 	int BuildCost();
-
+	bool GetPurchased() const;
 public:
 	static constexpr int maxBuildings = 5;
 	static constexpr int rentLevels = 6;
@@ -32,6 +40,7 @@ public:
 private:
 	std::string name;
 	Color color;
+	Owner owner = Owner::None;
 	int price;
 	bool purchased = false;
 	int built_apartments = 0;

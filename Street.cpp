@@ -51,7 +51,7 @@ Street& Street::operator=(const Street& Street)
 	return *this;
 }
 
-int Street::RentCost()
+int Street::GetRentCost() const
 {
 	assert(nBuilt >= 0 && nBuilt <= 5);
 	return rentcosttable[nBuilt];
@@ -60,4 +60,9 @@ int Street::RentCost()
 int Street::BuildCost()
 {
 	return buildcosttable[nBuilt];
+}
+
+bool Street::GetPurchased() const
+{
+	return purchased;
 }

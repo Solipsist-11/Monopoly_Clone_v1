@@ -3,11 +3,26 @@
 void Player::Move()
 {
 	int move = dice.DiceThrow();
-	BoardPos += move;
+	boardPos += move;
 	
-	if (BoardPos > maxBPos)
+	if (boardPos > maxBPos)
 	{
-		BoardPos -= maxBPos;
+		boardPos -= maxBPos;
 		cash += 200;
 	}
+}
+
+void Player::BuyCurrentTile(Board& brd)
+{
+	brd.GetCurrentTile(boardPos).Purchase(pIndex);
+}
+
+int Player::GetPIndex() const
+{
+	return pIndex;
+}
+
+int Player::GetBPos() const
+{
+	return boardPos;
 }
