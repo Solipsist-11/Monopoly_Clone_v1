@@ -8,11 +8,6 @@
 class Tile
 {
 public:
-	Tile() = default;
-	Tile(std::ifstream& input, int in_index);
-	void Purchase(int player_index);
-	int GetCurrentRent() const;
-public:
 	enum class Type
 	{
 		Street,
@@ -22,7 +17,6 @@ public:
 		Chance,
 		Community
 	};
-private:
 	enum class Owner
 	{
 		None,
@@ -31,11 +25,20 @@ private:
 		Player3,
 		Player4
 	};
+public:
+	Tile() = default;
+	Tile(std::ifstream& input, int in_index);
+	~Tile();
+	void Purchase(int player_index);
+	int GetCurrentRent() const;
+	std::string GetName() const;
+	Tile::Type GetType() const;
+	Tile::Owner GetOwner() const;
 private:
 	int index;
 	Type type;
 	Owner owner = Owner::None;
-
+	std::string name;
 	Street* street = nullptr;
 	Station* station = nullptr;
 };

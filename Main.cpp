@@ -11,9 +11,13 @@ int main()
 {
     std::ifstream input("init.txt", std::ios_base::binary);
     Board brd{ input };
-    Player player1;
-    Player enemy1;
-
+    std::vector<Player> participants;
+    int nParticipants;
+    nParticipants << std::cin.get();
+    for (int i = 0; i < nParticipants; i++)
+    {
+        participants.push_back( Player(i) );
+    }
 
     while (true)
     {
@@ -22,19 +26,21 @@ int main()
         case 'b':
             while (true)
             {
-                std::cout << "You are currently at Position " << player1.GetBPos();
+                std::cout << "You are currently at Position " << participants[1].GetBPos();
                 switch (std::cin.get())
                 {
                 case 'm':
-                    player1.Move();
+                    participants[1].Move(brd, participants[2]);
                     break;
                 case 'b':
-                    player1.BuyCurrentTile(brd);
+                    participants[1].BuyCurrentTile(brd);
                     break;
                 case 'p':
-                    player1.ShowPossesions();
+                    participants[1].ShowPossesions(brd);
                     break;
                 case 'x':
+                    break;
+                case 'q':
                     break;
                 }
 

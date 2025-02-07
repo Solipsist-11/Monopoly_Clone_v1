@@ -26,6 +26,21 @@ Tile::Tile(std::ifstream& input, int in_index)
 	}
 }
 
+Tile::~Tile()
+{
+	switch (type)
+	{
+	case Type::Street:
+		delete street;
+		street = nullptr;
+		break;
+	case Type::Station:
+		delete station;
+		station = nullptr;
+		break;
+	}
+}
+
 void Tile::Purchase(int player_index)
 {
 	owner = static_cast<Tile::Owner>(player_index);
@@ -39,6 +54,21 @@ int Tile::GetCurrentRent() const
 		return street->GetRentCost();
 		break;
 	case Type::Station:
-		return station->GetRentCost();
+		return station->GetRentCost(0);
 	}
+}
+
+std::string Tile::GetName() const
+{
+	return name;
+}
+
+Tile::Type Tile::GetType() const
+{
+	return type;
+}
+
+Tile::Owner Tile::GetOwner() const
+{
+	return owner;
 }

@@ -8,7 +8,31 @@ Board::Board(std::ifstream& input)
 	}
 }
 
+Board::~Board()
+{
+	for (int i = 0; i < nTiles; i++)
+	{
+		boardTiles[i].~Tile();
+	}
+}
+
 Tile& Board::GetCurrentTile(int index)
 {
 	return boardTiles[index];
+}
+
+Tile::Type Board::CheckCurrentType(int bPos) const
+{
+	
+	return boardTiles[bPos].GetType();
+}
+
+Tile::Owner Board::CheckCurrentOwner(int bPos) const
+{
+	return boardTiles[bPos].GetOwner();
+}
+
+int Board::GetCurrentRent(int bPos) const
+{
+	return boardTiles[bPos].GetCurrentRent();
 }

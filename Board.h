@@ -11,10 +11,12 @@ public:
 	Board() = default;
 	Board(std::ifstream& input);
 	~Board();
-	Board(const Board& brd);
-	Board operator=(const Board& brd);
+	Board(const Board& brd) = delete; // only one Board is used
+	Board operator=(const Board& brd) = delete; // only one Board is used
 	Tile& GetCurrentTile(int index);
-	Tile::Type CheckCurrentType();
+	Tile::Type CheckCurrentType(int bPos) const;
+	Tile::Owner CheckCurrentOwner(int bPos) const;
+	int GetCurrentRent(int bPos) const;
 private:
 	static constexpr int nTiles = 40;
 	Tile boardTiles[nTiles];
