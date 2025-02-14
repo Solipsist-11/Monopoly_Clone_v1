@@ -10,9 +10,9 @@ Board::Board(std::ifstream& input)
 
 Board::~Board()
 {
-	for (int i = 0; i < nTiles; i++)
+	for (Tile i : boardTiles)
 	{
-		boardTiles[i].~Tile();
+		i.~Tile();
 	}
 }
 

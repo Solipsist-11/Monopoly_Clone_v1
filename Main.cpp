@@ -9,10 +9,10 @@
 
 int main()
 {
-    std::ifstream input("init.txt", std::ios_base::binary);
+    std::ifstream input("Init.txt");
     Board brd{ input };
     std::vector<Player> participants;
-    int nParticipants;
+    int nParticipants = 0;
     nParticipants << std::cin.get();
     for (int i = 0; i < nParticipants; i++)
     {
@@ -36,7 +36,7 @@ int main()
                     participants[1].BuyCurrentTile(brd);
                     break;
                 case 'p':
-                    participants[1].ShowPossesions(brd);
+                    participants[1].ShowPossesions();
                     break;
                 case 'x':
                     break;

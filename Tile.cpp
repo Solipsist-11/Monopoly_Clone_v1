@@ -4,11 +4,13 @@ Tile::Tile(std::ifstream& input, int in_index)
 	:
 	index(in_index)
 {
-	std::string tile_init = "[" + in_index;
-	tile_init.append("*]");
+	std::string searchindex = "[";
+	searchindex += std::to_string(index);
+	searchindex.append("*]");
+	input.seekg(input.beg);
 	for (std::string line; std::getline(input, line); )
 	{
-		if (line == tile_init)
+		if (line == searchindex)
 		{
 			int t;
 			input >> t;
@@ -21,7 +23,10 @@ Tile::Tile(std::ifstream& input, int in_index)
 			case Type::Station:
 				station = new Station{ input, index };
 				break;
+			case Type::Unique:
+				break;
 			}
+			break;
 		}
 	}
 }

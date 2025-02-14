@@ -10,6 +10,7 @@ class Player
 {
 public:
 	Player(int n);
+	Player(const Player& player);
 	~Player();
 	void Move(const Board& brd, Player& enemy);
 	void BuyCurrentTile(Board& brd);
@@ -34,6 +35,8 @@ private:
 	const int pIndex;
 	int boardPos = 0;
 	int cash = 400;
+	bool jailed = false;
+	int jail_cooldown = 0;
 	Dice dice;
 	std::vector<Possesion>possesions;
 

@@ -2,7 +2,8 @@
 
 Station::Station(std::ifstream& input, int in_index)
 {
-	std::string searchindex = "[" + index;
+	std::string searchindex = "[";
+	searchindex += std::to_string(index);
 	searchindex.append("]");
 
 	input.seekg(0, input.beg);

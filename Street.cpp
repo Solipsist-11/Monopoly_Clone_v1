@@ -4,11 +4,12 @@ Street::Street(std::ifstream& input, int nStreet)
 	:
 	index(nStreet)
 {
-	std::string search_ind = "[" + index;
-	search_ind.append("]");
+	std::string searchindex = "[";
+	searchindex += std::to_string(index);
+	searchindex.append("]");
 	for (std::string line; std::getline(input, line); )
 	{
-		if (line == search_ind )
+		if (line == searchindex )
 		{
 			input >> name >> price;
 			int color_int;

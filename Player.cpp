@@ -6,6 +6,12 @@ Player::Player(int n)
 {
 }
 
+Player::Player(const Player& player)
+	:
+	pIndex(player.pIndex)
+{
+}
+
 Player::~Player()
 {
 	for (Possesion i : possesions)
@@ -18,8 +24,19 @@ void Player::Move(const Board& brd, Player& enemy)
 {
 	assert(boardPos >= 0);
 
-	int move = dice.DiceThrow();
-	boardPos += move;
+	if (!jailed)
+	{
+		int move = dice.DiceThrow();
+		boardPos += move;
+	}
+	else
+	{
+		jail_cooldown--;
+		if (jail_cooldown == 0)
+		{
+			jailed = false;
+		}
+	}
 	
 	if (boardPos > maxBPos)
 	{
@@ -35,6 +52,36 @@ void Player::Move(const Board& brd, Player& enemy)
 			int rent = brd.GetCurrentRent(boardPos);
 			cash -= rent;
 			enemy.ReceiveRent(rent);
+		}
+	}
+	else
+	{
+		switch (brd.CheckCurrentType(boardPos))
+		{
+		case Tile::Type::Unique:
+			switch (boardPos) 
+			{
+			case 4:
+				cash -= 200;
+				break;
+			case 10:
+				break;
+			case 20:
+				break;
+			case 30:
+				boardPos = 10;
+				jailed = true;
+				jail_cooldown = 2;
+				break;
+			case 38:
+				cash -= 100;
+				break;
+			}
+			break;
+		case Tile::Type::Chance:
+			break;
+		case Tile::Type::Community:
+			break;
 		}
 	}
 }
