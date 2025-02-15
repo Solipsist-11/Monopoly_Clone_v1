@@ -3,13 +3,15 @@
 #include <fstream>
 #include <vector>
 #include "Tile.h"
+#include "Chance.h"
+#include "Community.h"
 
 
 class Board
 {
 public:
 	Board() = default;
-	Board(std::ifstream& input);
+	Board(std::ifstream& input, Chance& chance, Community& community);
 	~Board();
 	Board(const Board& brd) = delete; // only one Board is used
 	Board operator=(const Board& brd) = delete; // only one Board is used

@@ -31,7 +31,7 @@ public:
 	};
 public:
 	Tile() = default;
-	Tile(std::ifstream& input, int in_index);
+	Tile(std::ifstream& input, int in_index, Chance& chance, Community& community);
 	~Tile();
 	void Purchase(int player_index);
 	int GetCurrentRent() const;
@@ -46,5 +46,7 @@ private:
 	Street* street = nullptr;
 	Station* station = nullptr;
 	Utility* utility = nullptr;
+	Chance* chance = nullptr;
+	Community* community = nullptr;
 };
 

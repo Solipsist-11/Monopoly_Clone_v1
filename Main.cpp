@@ -15,7 +15,7 @@ int main()
     Chance chanceStack(inputEffects);
     Community communityStack(inputEffects);
     std::ifstream input("InitBoard.txt");
-    Board brd{ input };
+    Board brd{ input, chanceStack, communityStack };
     std::vector<Player> participants;
     int nParticipants = 0;
     nParticipants << std::cin.get();

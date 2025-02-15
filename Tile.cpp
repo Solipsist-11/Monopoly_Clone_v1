@@ -1,6 +1,6 @@
 #include "Tile.h"
 
-Tile::Tile(std::ifstream& input, int in_index)
+Tile::Tile(std::ifstream& input, int in_index, Chance& chance, Community& community)
 	:
 	index(in_index)
 {
@@ -26,8 +26,10 @@ Tile::Tile(std::ifstream& input, int in_index)
 			case Type::Unique:
 				break;
 			case Type::Chance:
+				this->chance = &chance;
 				break;
 			case Type::Community:
+				this->community = &community;
 				break;
 			}
 			break;

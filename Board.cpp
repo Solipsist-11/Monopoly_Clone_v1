@@ -1,10 +1,10 @@
 #include "Board.h"
 
-Board::Board(std::ifstream& input)
+Board::Board(std::ifstream& input, Chance& chance, Community& community)
 {
 	for (int i = 0; i < nTiles; i++)
 	{
-		boardTiles[i] = {input, i};
+		boardTiles[i] = {input, i, chance, community};
 	}
 }
 
