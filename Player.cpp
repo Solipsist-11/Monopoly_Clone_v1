@@ -20,13 +20,14 @@ Player::~Player()
 	}
 }
 
-void Player::Move(const Board& brd, Player& enemy)
+void Player::Move(const Board& brd, std::vector<Player>& players)
 {
-	assert(boardPos >= 0);
+	assert(boardPos >= 0 && boardPos <= 39);
 
 	if (!jailed)
 	{
 		int move = dice.DiceThrow();
+		lastmove = move;
 		boardPos += move;
 	}
 	else
@@ -47,11 +48,12 @@ void Player::Move(const Board& brd, Player& enemy)
 		brd.CheckCurrentType(boardPos) != Tile::Type::Community &&
 		brd.CheckCurrentType(boardPos) != Tile::Type::Unique)
 	{
-		if (brd.CheckCurrentOwner(boardPos) != static_cast<Tile::Owner>(pIndex))
+		Tile::Owner currOwner = brd.CheckCurrentOwner(boardPos);
+		if (currOwner != static_cast<Tile::Owner>(pIndex) && currOwner != Tile::Owner::None)
 		{
 			int rent = brd.GetCurrentRent(boardPos);
 			cash -= rent;
-			enemy.ReceiveRent(rent);
+			players[int(currOwner)].ReceiveRent(rent);
 		}
 	}
 	else
@@ -71,7 +73,7 @@ void Player::Move(const Board& brd, Player& enemy)
 			case 30:
 				boardPos = 10;
 				jailed = true;
-				jail_cooldown = 2;
+				jail_cooldown = max_jailtime;
 				break;
 			case 38:
 				cash -= 100;
@@ -115,6 +117,16 @@ int Player::GetPIndex() const
 int Player::GetBPos() const
 {
 	return boardPos;
+}
+
+int Player::GetLastMove() const
+{
+	return lastmove;
+}
+
+std::string Player::GetTileName(const Board& brd) const
+{
+	return brd.GetTileName(boardPos);
 }
 
 Player::Possesion::Possesion(Tile& tile)

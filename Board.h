@@ -17,6 +17,7 @@ public:
 	Tile::Type CheckCurrentType(int bPos) const;
 	Tile::Owner CheckCurrentOwner(int bPos) const;
 	int GetCurrentRent(int bPos) const;
+	std::string GetTileName(int bPos) const;
 private:
 	static constexpr int nTiles = 40;
 	Tile boardTiles[nTiles];

@@ -5,11 +5,16 @@
 #include <vector>
 #include "Board.h"
 #include "Player.h"
+#include "Chance.h"
+#include "Community.h"
 
 
 int main()
 {
-    std::ifstream input("Init.txt");
+    std::ifstream inputEffects("InitEffects.txt");
+    Chance chanceStack(inputEffects);
+    Community communityStack(inputEffects);
+    std::ifstream input("InitBoard.txt");
     Board brd{ input };
     std::vector<Player> participants;
     int nParticipants = 0;
@@ -26,17 +31,18 @@ int main()
         case 'b':
             while (true)
             {
-                std::cout << "You are currently at Position " << participants[1].GetBPos();
+                std::cout << "You are currently at Position " << participants[0].GetBPos() << ", Tilename: " << participants[0].GetTileName(brd);
+                std::cout << "(m)ove, (b)uy, show (p)ossessions, e(x)it, (q)uicksave";
                 switch (std::cin.get())
                 {
                 case 'm':
-                    participants[1].Move(brd, participants[2]);
+                    participants[0].Move(brd, participants);
                     break;
                 case 'b':
-                    participants[1].BuyCurrentTile(brd);
+                    participants[0].BuyCurrentTile(brd);
                     break;
                 case 'p':
-                    participants[1].ShowPossesions();
+                    participants[0].ShowPossesions();
                     break;
                 case 'x':
                     break;
@@ -44,10 +50,13 @@ int main()
                     break;
                 }
 
+
+
             }
-        case 's':
+        case 'l':
             break;
         case 'q':
+            break;
             break;
         }
     }

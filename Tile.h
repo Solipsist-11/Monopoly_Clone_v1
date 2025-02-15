@@ -1,9 +1,13 @@
 #pragma once
 #include <string>
 #include <fstream>
+#include <assert.h>
 
 #include "Street.h"
 #include "Station.h"
+#include "Utility.h"
+#include "Chance.h"
+#include "Community.h"
 
 class Tile
 {
@@ -41,5 +45,6 @@ private:
 	std::string name;
 	Street* street = nullptr;
 	Station* station = nullptr;
+	Utility* utility = nullptr;
 };
 

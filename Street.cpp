@@ -9,11 +9,10 @@ Street::Street(std::ifstream& input, int nStreet)
 	searchindex.append("]");
 	for (std::string line; std::getline(input, line); )
 	{
-		if (line == searchindex )
+		if (line == searchindex)
 		{
-			input >> name >> price;
 			int color_int;
-			input >> color_int;
+			input >> name >> color_int >> price;
 			color = static_cast<Color>(color_int);
 			for (int i = 0; i < rentLevels; i++)
 			{

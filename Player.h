@@ -12,12 +12,14 @@ public:
 	Player(int n);
 	Player(const Player& player);
 	~Player();
-	void Move(const Board& brd, Player& enemy);
+	void Move(const Board& brd, std::vector<Player>& players);
 	void BuyCurrentTile(Board& brd);
 	void ShowPossesions();
 	void ReceiveRent(int rent);
 	int GetPIndex() const;
 	int GetBPos() const;
+	int GetLastMove() const;
+	std::string GetTileName(const Board& brd) const;
 private:
 	class Possesion
 	{
@@ -37,9 +39,11 @@ private:
 	int cash = 400;
 	bool jailed = false;
 	int jail_cooldown = 0;
+	int lastmove = 0;
 	Dice dice;
 	std::vector<Possesion>possesions;
 
 	static constexpr int maxBPos = 39;
+	static constexpr int max_jailtime = 2;
 };
 

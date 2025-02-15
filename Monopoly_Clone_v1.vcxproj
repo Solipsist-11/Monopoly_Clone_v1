@@ -128,25 +128,34 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Chance.cpp" />
+    <ClCompile Include="Community.cpp" />
     <ClCompile Include="Dice.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SaveSystem.cpp" />
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="Street.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
+    <ClInclude Include="Chance.h" />
+    <ClInclude Include="Community.h" />
     <ClInclude Include="Dice.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SaveSystem.h" />
     <ClInclude Include="Station.h" />
     <ClInclude Include="Street.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Init.txt" />
+    <Text Include="InitBoard.txt" />
+    <Text Include="InitEffects.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

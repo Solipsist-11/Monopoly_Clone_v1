@@ -25,10 +25,15 @@ Tile::Tile(std::ifstream& input, int in_index)
 				break;
 			case Type::Unique:
 				break;
+			case Type::Chance:
+				break;
+			case Type::Community:
+				break;
 			}
 			break;
 		}
 	}
+
 }
 
 Tile::~Tile()
@@ -49,6 +54,10 @@ Tile::~Tile()
 void Tile::Purchase(int player_index)
 {
 	owner = static_cast<Tile::Owner>(player_index);
+	if (type == Type::Unique)
+	{
+		assert(owner == Tile::Owner::None);
+	}
 }
 
 int Tile::GetCurrentRent() const
@@ -60,6 +69,8 @@ int Tile::GetCurrentRent() const
 		break;
 	case Type::Station:
 		return station->GetRentCost(0);
+	case Type::Utility:
+		return 0;
 	}
 }
 

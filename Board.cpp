@@ -36,3 +36,8 @@ int Board::GetCurrentRent(int bPos) const
 {
 	return boardTiles[bPos].GetCurrentRent();
 }
+
+std::string Board::GetTileName(int bPos) const
+{
+	return boardTiles[bPos].GetName();
+}
