@@ -1,4 +1,5 @@
 #include "Tile.h"
+#include <iostream>
 
 Tile::Tile(std::ifstream& input, int in_index, Chance& chance, Community& community)
 	:
@@ -7,7 +8,6 @@ Tile::Tile(std::ifstream& input, int in_index, Chance& chance, Community& commun
 	std::string searchindex = "[";
 	searchindex += std::to_string(index);
 	searchindex.append("*]");
-	input.seekg(input.beg);
 	for (std::string line; std::getline(input, line); )
 	{
 		if (line == searchindex)
@@ -19,17 +19,26 @@ Tile::Tile(std::ifstream& input, int in_index, Chance& chance, Community& commun
 			{
 			case Type::Street:
 				street = new Street{ input, index };
+				name = street->GetName();
 				break;
 			case Type::Station:
 				station = new Station{ input, index };
+				name = station->GetName();
 				break;
 			case Type::Unique:
+				input >> name;
 				break;
 			case Type::Chance:
 				this->chance = &chance;
+				name = "Chance";
 				break;
 			case Type::Community:
 				this->community = &community;
+				name = "Community";
+				break;
+			case Type::Utility:
+				utility = new Utility{ index };
+				name = utility->GetName();
 				break;
 			}
 			break;
@@ -38,20 +47,62 @@ Tile::Tile(std::ifstream& input, int in_index, Chance& chance, Community& commun
 
 }
 
-Tile::~Tile()
-{
-	switch (type)
-	{
-	case Type::Street:
-		delete street;
-		street = nullptr;
-		break;
-	case Type::Station:
-		delete station;
-		station = nullptr;
-		break;
-	}
-}
+//Tile::Tile(const Tile& tile)
+//	:
+//	index(tile.index),
+//	owner(tile.owner),
+//	type(tile.type),
+//	name(tile.name),
+//	street(tile.street),
+//	station(tile.station),
+//	utility(tile.utility),
+//	chance(tile.chance),
+//	community(tile.community)
+//{
+//}
+
+//bool Tile::operator!=(const Tile& tile)
+//{
+//	return index == tile.index &&
+//		owner == tile.owner &&
+//		type == tile.type &&
+//		name == tile.name &&
+//		street == tile.street &&
+//		station == tile.station &&
+//		utility == tile.utility &&
+//		chance == tile.chance &&
+//		community == tile.community;
+//}
+//
+//Tile& Tile::operator=(const Tile& tile)
+//{
+//	if (*this != tile)
+//	{
+//		name = tile.name;
+//		owner = tile.owner;
+//		type = tile.type;
+//		index = tile.index;
+//		switch (type)
+//		{
+//		case Type::Street:
+//			street = new Street;
+//			break;
+//		case Type::Station:
+//			station = new Station;
+//			break;
+//
+//		}
+//	}
+//	return *this;
+//}
+//
+//Tile::~Tile()
+//{
+//	street->~Street();
+//	station->~Station();
+//	utility->~Utility();
+//	std::cout << "Tile::Destructor was called \n";
+//}
 
 void Tile::Purchase(int player_index)
 {
@@ -62,7 +113,7 @@ void Tile::Purchase(int player_index)
 	}
 }
 
-int Tile::GetCurrentRent() const
+int Tile::GetCurrentRent(int moves, int nSame) const
 {
 	switch (type)
 	{
@@ -70,9 +121,27 @@ int Tile::GetCurrentRent() const
 		return street->GetRentCost();
 		break;
 	case Type::Station:
-		return station->GetRentCost(0);
+		return station->GetRentCost(nSame);
+		break;
 	case Type::Utility:
-		return 0;
+		return utility->GetRent(moves, nSame);
+		break;
+	}
+}
+
+int Tile::GetPrice() const
+{
+	switch (type)
+	{
+	case Type::Street:
+		return street->GetPrice();
+		break;
+	case Type::Station:
+		return station->GetPrice();
+		break;
+	case Type::Utility:
+		return utility->GetPrice();
+		break;
 	}
 }
 

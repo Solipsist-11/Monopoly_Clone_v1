@@ -23,33 +23,33 @@ Street::Street(std::ifstream& input, int nStreet)
 	}
 }
 
-Street::~Street()
-{
-}
+//Street::~Street()
+//{
+//}
 
-Street::Street(const Street& Street)
-	:
-	name(Street.name),
-	price(Street.price),
-	index(Street.index)
-{
-	for (int i = 0; i < rentLevels; i++)
-	{
-		rentcosttable[i] = Street.rentcosttable[i];
-	}
-}
-
-Street& Street::operator=(const Street& Street)
-{
-	this->name = Street.name;
-	this->price = Street.price;
-	this->index = Street.index;
-	for (int i = 0; i < rentLevels; i++)
-	{
-		this->rentcosttable[i] = Street.rentcosttable[i];
-	}
-	return *this;
-}
+//Street::Street(const Street& Street)
+//	:
+//	name(Street.name),
+//	price(Street.price),
+//	index(Street.index)
+//{
+//	for (int i = 0; i < rentLevels; i++)
+//	{
+//		rentcosttable[i] = Street.rentcosttable[i];
+//	}
+//}
+//
+//Street& Street::operator=(const Street& Street)
+//{
+//	name = Street.name;
+//	price = Street.price;
+//	index = Street.index;
+//	for (int i = 0; i < rentLevels; i++)
+//	{
+//		rentcosttable[i] = Street.rentcosttable[i];
+//	}
+//	return *this;
+//}
 
 int Street::GetRentCost() const
 {
@@ -62,7 +62,17 @@ int Street::BuildCost()
 	return buildcosttable[nBuilt];
 }
 
+int Street::GetPrice() const
+{
+	return price;
+}
+
 bool Street::GetPurchased() const
 {
 	return purchased;
+}
+
+std::string Street::GetName() const
+{
+	return name;
 }

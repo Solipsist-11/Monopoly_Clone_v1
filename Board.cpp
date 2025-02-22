@@ -1,19 +1,21 @@
 #include "Board.h"
+#include <iostream>
 
 Board::Board(std::ifstream& input, Chance& chance, Community& community)
 {
 	for (int i = 0; i < nTiles; i++)
 	{
-		boardTiles[i] = {input, i, chance, community};
+		boardTiles[i] = Tile{ input, i, chance, community };
 	}
 }
 
 Board::~Board()
 {
-	for (Tile i : boardTiles)
+	for (int i = 0; i < nTiles; i++)
 	{
-		i.~Tile();
+		boardTiles[i].~Tile();
 	}
+	std::cout << "Board::Destructor was called";
 }
 
 Tile& Board::GetCurrentTile(int index)
@@ -32,12 +34,22 @@ Tile::Owner Board::CheckCurrentOwner(int bPos) const
 	return boardTiles[bPos].GetOwner();
 }
 
-int Board::GetCurrentRent(int bPos) const
+int Board::GetCurrentRent(int bPos, int moves, int nTiles) const
 {
-	return boardTiles[bPos].GetCurrentRent();
+	return boardTiles[bPos].GetCurrentRent(moves, nTiles);
 }
 
 std::string Board::GetTileName(int bPos) const
 {
 	return boardTiles[bPos].GetName();
+}
+
+std::vector<int> Board::GetUtilL() const
+{
+	return utilList;
+}
+
+std::vector<int> Board::GetStatL() const
+{
+	return statList;
 }

@@ -14,12 +14,14 @@ public:
 	~Player();
 	void Move(const Board& brd, std::vector<Player>& players);
 	void BuyCurrentTile(Board& brd);
-	void ShowPossesions();
+	void ShowPossesions() const;
 	void ReceiveRent(int rent);
 	int GetPIndex() const;
 	int GetBPos() const;
 	int GetLastMove() const;
+	int GetCurrCash() const;
 	std::string GetTileName(const Board& brd) const;
+	void ControlFlow(Board& brd, std::vector<Player>& everyone);
 private:
 	class Possesion
 	{

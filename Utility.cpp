@@ -6,6 +6,10 @@ Utility::Utility(int ind)
 {
 }
 
+Utility::~Utility()
+{
+}
+
 int Utility::GetRent(int move, int nUtil) const
 {
     int rent = 0;
@@ -19,4 +23,14 @@ int Utility::GetRent(int move, int nUtil) const
         break;
     }
     return rent;
+}
+
+int Utility::GetPrice() const
+{
+    return price;
+}
+
+std::string Utility::GetName() const
+{
+    return name;
 }

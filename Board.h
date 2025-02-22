@@ -18,10 +18,14 @@ public:
 	Tile& GetCurrentTile(int index);
 	Tile::Type CheckCurrentType(int bPos) const;
 	Tile::Owner CheckCurrentOwner(int bPos) const;
-	int GetCurrentRent(int bPos) const;
+	int GetCurrentRent(int bPos, int moves, int nTiles) const;
 	std::string GetTileName(int bPos) const;
+	std::vector<int> GetUtilL() const;
+	std::vector<int> GetStatL() const;
 private:
 	static constexpr int nTiles = 40;
 	Tile boardTiles[nTiles];
+	std::vector<int> utilList;
+	std::vector<int> statList;
 };
 

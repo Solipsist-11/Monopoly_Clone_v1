@@ -51,9 +51,32 @@ void Player::Move(const Board& brd, std::vector<Player>& players)
 		Tile::Owner currOwner = brd.CheckCurrentOwner(boardPos);
 		if (currOwner != static_cast<Tile::Owner>(pIndex) && currOwner != Tile::Owner::None)
 		{
-			int rent = brd.GetCurrentRent(boardPos);
+			int nSameTiles = 0;
+			if ( brd.CheckCurrentType(boardPos) == Tile::Type::Station)
+			{
+				for (auto i : brd.GetStatL())
+				{
+					if (brd.CheckCurrentOwner(i) == currOwner)
+					{
+						nSameTiles++;
+					}
+				}
+			}
+			else if (brd.CheckCurrentType(boardPos) == Tile::Type::Utility)
+			{
+				for (auto i : brd.GetUtilL())
+				{
+					if (brd.CheckCurrentOwner(i) == currOwner)
+					{
+						nSameTiles++;
+					}
+				}
+			}
+
+			int rent = brd.GetCurrentRent(boardPos, lastmove, nSameTiles);
 			cash -= rent;
 			players[int(currOwner)].ReceiveRent(rent);
+			std::cout << "Player " << pIndex << " payed " << rent << " to Player " << int(currOwner) << "$\n";
 		}
 	}
 	else
@@ -90,11 +113,25 @@ void Player::Move(const Board& brd, std::vector<Player>& players)
 
 void Player::BuyCurrentTile(Board& brd)
 {
-	brd.GetCurrentTile(boardPos).Purchase(pIndex);
-	possesions.push_back(Possesion{ brd.GetCurrentTile(boardPos) });
+	const int tilePrice = brd.GetCurrentTile(boardPos).GetPrice();
+	if (brd.CheckCurrentType(boardPos) != Tile::Type::Chance &&
+		brd.CheckCurrentType(boardPos) != Tile::Type::Community &&
+		brd.CheckCurrentType(boardPos) != Tile::Type::Unique &&
+		brd.CheckCurrentOwner(boardPos) == Tile::Owner::None && 
+		tilePrice <= cash)
+	{
+		cash -= tilePrice;
+		brd.GetCurrentTile(boardPos).Purchase(pIndex);
+		possesions.push_back(Possesion{ brd.GetCurrentTile(boardPos) });
+		std::cout << "Player " << pIndex << " bought " << brd.GetTileName(boardPos) << "for " << tilePrice << "$\n";
+	}
+	else
+	{
+
+	}
 }
 
-void Player::ShowPossesions()
+void Player::ShowPossesions() const
 {
 	std::cout << "You currently posses the following properties:\n";
 	for (Possesion i : possesions)
@@ -124,6 +161,11 @@ int Player::GetLastMove() const
 	return lastmove;
 }
 
+int Player::GetCurrCash() const
+{
+	return cash;
+}
+
 std::string Player::GetTileName(const Board& brd) const
 {
 	return brd.GetTileName(boardPos);
@@ -137,7 +179,6 @@ Player::Possesion::Possesion(Tile& tile)
 
 Player::Possesion::~Possesion()
 {
-	delete ownedTile;
 	ownedTile = nullptr;
 }
 
@@ -161,4 +202,24 @@ Player::Possesion& Player::Possesion::operator=(const Possesion& pos)
 void Player::Possesion::PrintName() const
 {
 	std::cout << ownedTile->GetName();
+}
+
+void Player::ControlFlow(Board& brd, std::vector<Player>& everyone)
+{
+	Move(brd, everyone);
+	int currCash = GetCurrCash();
+	if (currCash <= 100)
+	{
+	}
+	else
+	{
+		if (brd.CheckCurrentType(boardPos) != Tile::Type::Chance &&
+			brd.CheckCurrentType(boardPos) != Tile::Type::Community &&
+			brd.CheckCurrentType(boardPos) != Tile::Type::Unique &&
+			brd.CheckCurrentOwner(boardPos) == Tile::Owner::None &&
+			brd.GetCurrentTile(boardPos).GetPrice() <= currCash)
+		{
+			BuyCurrentTile(brd);
+		}
+	}
 }
