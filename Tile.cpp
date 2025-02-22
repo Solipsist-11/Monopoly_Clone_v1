@@ -85,10 +85,10 @@ Tile::Tile(std::ifstream& input, int in_index, Chance& chance, Community& commun
 //		switch (type)
 //		{
 //		case Type::Street:
-//			street = new Street;
+//			street = new Street{*tile.street}; <--I would have assumed that the newly created objects could be initialized with the *, but without the compiler complains...
 //			break;
 //		case Type::Station:
-//			station = new Station;
+//			station = new Station{*tile.station};  <--I would have assumed that the newly created objects could be initialized with the *, but without the compiler complains...
 //			break;
 //
 //		}
@@ -98,9 +98,12 @@ Tile::Tile(std::ifstream& input, int in_index, Chance& chance, Community& commun
 //
 //Tile::~Tile()
 //{
-//	street->~Street();
-//	station->~Station();
-//	utility->~Utility();
+//	delete street;
+//	street = nullptr;
+//	delete station;
+//	station = nullptr;
+//	delete utility;
+// 	utility = nullptr;
 //	std::cout << "Tile::Destructor was called \n";
 //}
 
