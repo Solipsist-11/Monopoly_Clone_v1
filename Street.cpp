@@ -23,22 +23,24 @@ Street::Street(std::ifstream& input, int nStreet)
 	}
 }
 
-//Street::~Street()
-//{
-//}
+Street::~Street()
+{
+}
 
-//Street::Street(const Street& Street)
-//	:
-//	name(Street.name),
-//	price(Street.price),
-//	index(Street.index)
-//{
-//	for (int i = 0; i < rentLevels; i++)
-//	{
-//		rentcosttable[i] = Street.rentcosttable[i];
-//	}
-//}
-//
+Street::Street(const Street& Street)
+	:
+	name(Street.name),
+	color(Street.color),
+	price(Street.price),
+	index(Street.index),
+	owner(Street.owner)
+{
+	for (int i = 0; i < rentLevels; i++)
+	{
+		rentcosttable[i] = Street.rentcosttable[i];
+	}
+}
+
 //Street& Street::operator=(const Street& Street)
 //{
 //	name = Street.name;
@@ -50,6 +52,18 @@ Street::Street(std::ifstream& input, int nStreet)
 //	}
 //	return *this;
 //}
+
+void Street::Build()
+{
+	if (nBuilt >= 0 && nBuilt < maxBuildings && purchased)
+	{
+		nBuilt++;
+	}
+	else
+	{
+		std::cout << "Building is not (yet) possible";
+	}
+}
 
 int Street::GetRentCost() const
 {

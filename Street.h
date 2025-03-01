@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 #include <fstream>
 #include <assert.h>
 
@@ -27,9 +28,9 @@ private:
 public:
 	Street(std::ifstream& input, int nStreet);
 	Street() = default;
-	//Street(const Street& Street);
-	//~Street();
+	Street(const Street& Street);
 	//Street& operator=(const Street& Street);
+	~Street();
 	void Build();
 	int GetRentCost() const;
 	int BuildCost();
@@ -46,10 +47,9 @@ private:
 	Owner owner = Owner::None;
 	int price = 0;
 	bool purchased = false;
-	int built_apartments = 0;
 	int rentcosttable[rentLevels] = { 0, 0, 0, 0, 0, 0 };
 	int buildcosttable[maxBuildings] = { 0, 0, 0, 0, 0};
 	int nBuilt = 0;
-	int index = 0;
+	const int index = 0;
 };
 

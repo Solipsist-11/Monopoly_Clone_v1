@@ -44,7 +44,6 @@ private:
 	int lastmove = 0;
 	Dice dice;
 	std::vector<Possesion>possesions;
-
 	static constexpr int maxBPos = 39;
 	static constexpr int max_jailtime = 2;
 };

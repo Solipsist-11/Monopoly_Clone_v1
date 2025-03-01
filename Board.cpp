@@ -6,6 +6,15 @@ Board::Board(std::ifstream& input, Chance& chance, Community& community)
 	for (int i = 0; i < nTiles; i++)
 	{
 		boardTiles[i] = Tile{ input, i, chance, community };
+		Tile::Type currType = boardTiles[i].GetType();
+		if (currType == Tile::Type::Station)
+		{
+			statList.emplace_back(i);
+		}
+		else if (currType == Tile::Type::Utility)
+		{
+			utilList.emplace_back(i);
+		}
 	}
 }
 
@@ -15,7 +24,7 @@ Board::~Board()
 	{
 		boardTiles[i].~Tile();
 	}
-	std::cout << "Board::Destructor was called";
+	//std::cout << "Board::Destructor was called";
 }
 
 Tile& Board::GetCurrentTile(int index)

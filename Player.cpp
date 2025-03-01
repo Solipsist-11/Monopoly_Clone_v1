@@ -33,9 +33,11 @@ void Player::Move(const Board& brd, std::vector<Player>& players)
 	else
 	{
 		jail_cooldown--;
+		std::cout << "Player " << pIndex << " will be in Jail for " << jail_cooldown << " more turns \n";
 		if (jail_cooldown == 0)
 		{
 			jailed = false;
+			std::cout << "Player " << pIndex << " is out of Jail!\n";
 		}
 	}
 	
@@ -43,6 +45,7 @@ void Player::Move(const Board& brd, std::vector<Player>& players)
 	{
 		boardPos -= (maxBPos + 1);
 		cash += 200;
+		std::cout << "Player " << pIndex << " received 200$ for passing Go \n";
 	}
 	if (brd.CheckCurrentType(boardPos) != Tile::Type::Chance &&
 		brd.CheckCurrentType(boardPos) != Tile::Type::Community &&
@@ -75,8 +78,8 @@ void Player::Move(const Board& brd, std::vector<Player>& players)
 
 			int rent = brd.GetCurrentRent(boardPos, lastmove, nSameTiles);
 			cash -= rent;
-			players[int(currOwner)].ReceiveRent(rent);
-			std::cout << "Player " << pIndex << " payed " << rent << " to Player " << int(currOwner) << "$\n";
+			players[int(currOwner) - 1].ReceiveRent(rent);
+			std::cout << "Player " << pIndex << " payed " << rent << "$" << " to Player " << int(currOwner) << "\n";
 		}
 	}
 	else
@@ -88,6 +91,7 @@ void Player::Move(const Board& brd, std::vector<Player>& players)
 			{
 			case 4:
 				cash -= 200;
+				std::cout << "Player " << pIndex << " had to pay 200$ in Income Tax \n";
 				break;
 			case 10:
 				break;
@@ -97,9 +101,11 @@ void Player::Move(const Board& brd, std::vector<Player>& players)
 				boardPos = 10;
 				jailed = true;
 				jail_cooldown = max_jailtime;
+				std::cout << "Player " << pIndex << "went to Jail (for 2 turns)! \n";
 				break;
 			case 38:
 				cash -= 100;
+				std::cout << "Player " << pIndex << " had to pay 100$ in Luxury Tax \n";
 				break;
 			}
 			break;
@@ -123,11 +129,12 @@ void Player::BuyCurrentTile(Board& brd)
 		cash -= tilePrice;
 		brd.GetCurrentTile(boardPos).Purchase(pIndex);
 		possesions.push_back(Possesion{ brd.GetCurrentTile(boardPos) });
-		std::cout << "Player " << pIndex << " bought " << brd.GetTileName(boardPos) << "for " << tilePrice << "$\n";
+		std::cout << "Player " << pIndex << " bought " << brd.GetTileName(boardPos) << " for " << tilePrice << "$\n";
+		std::cout << "Player " << pIndex << "has " << cash << "$ still left. \n";
 	}
 	else
 	{
-
+		std::cout << "Purchase could not be completed \n";
 	}
 }
 

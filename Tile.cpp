@@ -47,65 +47,73 @@ Tile::Tile(std::ifstream& input, int in_index, Chance& chance, Community& commun
 
 }
 
-//Tile::Tile(const Tile& tile)
-//	:
-//	index(tile.index),
-//	owner(tile.owner),
-//	type(tile.type),
-//	name(tile.name),
-//	street(tile.street),
-//	station(tile.station),
-//	utility(tile.utility),
-//	chance(tile.chance),
-//	community(tile.community)
-//{
-//}
+Tile::Tile(const Tile& tile)
+	:
+	index(tile.index),
+	owner(tile.owner),
+	type(tile.type),
+	name(tile.name),
+	street(tile.street),
+	station(tile.station),
+	utility(tile.utility),
+	chance(tile.chance),
+	community(tile.community)
+{
+}
 
-//bool Tile::operator!=(const Tile& tile)
-//{
-//	return index == tile.index &&
-//		owner == tile.owner &&
-//		type == tile.type &&
-//		name == tile.name &&
-//		street == tile.street &&
-//		station == tile.station &&
-//		utility == tile.utility &&
-//		chance == tile.chance &&
-//		community == tile.community;
-//}
-//
-//Tile& Tile::operator=(const Tile& tile)
-//{
-//	if (*this != tile)
-//	{
-//		name = tile.name;
-//		owner = tile.owner;
-//		type = tile.type;
-//		index = tile.index;
-//		switch (type)
-//		{
-//		case Type::Street:
-//			street = new Street{*tile.street}; <--I would have assumed that the newly created objects could be initialized with the *, but without the compiler complains...
-//			break;
-//		case Type::Station:
-//			station = new Station{*tile.station};  <--I would have assumed that the newly created objects could be initialized with the *, but without the compiler complains...
-//			break;
-//
-//		}
-//	}
-//	return *this;
-//}
-//
-//Tile::~Tile()
-//{
-//	delete street;
-//	street = nullptr;
-//	delete station;
-//	station = nullptr;
-//	delete utility;
-// 	utility = nullptr;
-//	std::cout << "Tile::Destructor was called \n";
-//}
+bool Tile::operator==(const Tile& tile)
+{
+	return index == tile.index &&
+		owner == tile.owner &&
+		type == tile.type &&
+		name == tile.name &&
+		street == tile.street &&
+		station == tile.station &&
+		utility == tile.utility &&
+		chance == tile.chance &&
+		community == tile.community;
+}
+
+bool Tile::operator!=(const Tile& tile)
+{
+	return !(*this == tile);
+}
+
+
+Tile& Tile::operator=(const Tile& tile)
+{
+	if (*this != tile)
+	{
+		name = tile.name;
+		owner = tile.owner;
+		type = tile.type;
+		index = tile.index;
+		switch (type)
+		{
+		case Type::Street:
+			street = new Street{*tile.street};
+			break;
+		case Type::Station:
+			station = new Station{*tile.station};
+			break;
+		case Type::Utility:
+			utility = new Utility{*tile.utility};
+			break;
+		}
+	}
+	return *this;
+}
+
+Tile::~Tile()
+{
+	delete street;
+	street = nullptr;
+	delete station;
+	station = nullptr;
+	delete utility;
+ 	utility = nullptr;
+	//std::cout << "Tile::Destructor was called \n";
+}
 
 void Tile::Purchase(int player_index)
 {

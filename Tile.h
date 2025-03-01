@@ -32,10 +32,11 @@ public:
 public:
 	Tile() = default;
 	Tile(std::ifstream& input, int in_index, Chance& chance, Community& community);
-	//Tile(const Tile& tile);
-	//bool operator!=(const Tile& tile);
-	//Tile& operator=(const Tile& tile);
-	//~Tile();
+	Tile(const Tile& tile);
+	bool operator==(const Tile& tile);
+	bool operator!=(const Tile& tile);
+	Tile& operator=(const Tile& tile);
+	~Tile();
 	void Purchase(int player_index);
 	int GetCurrentRent(int moves, int nSame) const;
 	int GetPrice() const;
